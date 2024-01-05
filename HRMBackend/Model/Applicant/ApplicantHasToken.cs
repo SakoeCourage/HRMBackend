@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HRMBackend.DTO.Applicant
+namespace HRMBackend.Model.Applicant
 {
     public class ApplicantHasToken
     {
@@ -10,8 +10,10 @@ namespace HRMBackend.DTO.Applicant
 
         public int applicantID { get; set; }
 
+        public DateTime createdAt { get; set; }
+
         public string urlToken { get; set; }
 
-        public virtual ApplicantDTO applicant { get;  }
+        public virtual Applicant applicant { get; }
     }
 }

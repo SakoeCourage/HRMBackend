@@ -1,4 +1,4 @@
-﻿using HRMBackend.DTO.Applicant;
+﻿using HRMBackend.Model.Applicant;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRMBackend.DB
@@ -12,12 +12,12 @@ namespace HRMBackend.DB
         /**
          * DB SETS 
          */
-        public DbSet<ApplicantDTO> Applicant { get; set; }
+        public DbSet<Applicant> Applicant { get; set; }
         public DbSet<ApplicantHasToken> ApplicantHasToken { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ApplicantDTO>()
+            modelBuilder.Entity<Applicant>()
                 .HasOne(e => e.applicantHasToken)
                 .WithOne(e => e.applicant)
                 .HasForeignKey<ApplicantHasToken>(e => e.applicantID);

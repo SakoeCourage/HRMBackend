@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HRMBackend.DTO.Applicant
+namespace HRMBackend.Model.Applicant
 {
-    public class ApplicantDTO
+    public class Applicant
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
