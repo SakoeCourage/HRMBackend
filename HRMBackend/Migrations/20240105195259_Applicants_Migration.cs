@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HRMBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Applicants_Migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,8 +36,9 @@ namespace HRMBackend.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    applicantID = table.Column<int>(type: "int", nullable: false),
-                    urlToken = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    contact = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    otp = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    applicantID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

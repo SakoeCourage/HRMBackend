@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace HRMBackend.Model.Applicant
 {
@@ -19,15 +21,15 @@ namespace HRMBackend.Model.Applicant
         [Required]
         public string lastName { get; set; }
 
-        [Required, EmailAddress]
-        public string email { get; set; }
+        [EmailAddress]
+        public string? email { get; set; }
 
         [Required]
         public string contact { get; set; }
 
-        public bool hasSubmittedApplication { get; set; } = false;
-
-        public virtual ApplicantHasToken applicantHasToken { get; }
+        public bool? hasSubmittedApplication { get; set; } = false;
+        [JsonIgnore]
+        public virtual ApplicantHasOTP otp { get; set; }
 
     }
 }

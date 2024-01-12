@@ -1,12 +1,12 @@
-﻿namespace HRMBackend.Services.SMS_Service
+﻿using HRMBackend.Model.SMS;
+
+namespace HRMBackend.Services.SMS_Service
 {
     public interface ISMSService
     {
-
-
-        ISMSService AddBatchSMS(string fullName, string message, string contact);
-        ISMSService SendBatchSMS();
-        ISMSService SendSMS();
-        ISMSService AddRange(List<SMSDTO> list);
+        ISMSService AddToBatchSMS(SMSCampaignReceipient recipientData);
+        ISMSService AddRange(List<SMSCampaignReceipient> list);
+        void SendBatchSMS();
+        void SendSMS(string contact, string message);
     }
 }

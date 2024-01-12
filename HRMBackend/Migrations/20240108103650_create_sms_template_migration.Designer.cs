@@ -4,6 +4,7 @@ using HRMBackend.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRMBackend.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240108103650_create_sms_template_migration")]
+    partial class create_sms_template_migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,13 +41,14 @@ namespace HRMBackend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("firsName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("hasSubmittedApplication")
+                    b.Property<bool>("hasSubmittedApplication")
                         .HasColumnType("bit");
 
                     b.Property<string>("lastName")
@@ -92,79 +96,6 @@ namespace HRMBackend.Migrations
                     b.ToTable("ApplicantHasOTP");
                 });
 
-            modelBuilder.Entity("HRMBackend.Model.SMS.SMSCampaignHistory", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("campaignName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("createdAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("receipients")
-                        .HasColumnType("int");
-
-                    b.Property<int>("smsTemplateId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("updatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("smsTemplateId");
-
-                    b.ToTable("SMSCampaignHistory");
-                });
-
-            modelBuilder.Entity("HRMBackend.Model.SMS.SMSCampaignReceipient", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("campaignHistoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("contact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("createdAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("firstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("lastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("status")
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Status => Pending or Successful or Failed");
-
-                    b.Property<DateTime>("updatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("campaignHistoryId");
-
-                    b.ToTable("SMSCampaignReceipient");
-                });
-
             modelBuilder.Entity("HRMBackend.Model.SMS.SMSTemplate", b =>
                 {
                     b.Property<int>("id")
@@ -209,42 +140,10 @@ namespace HRMBackend.Migrations
                     b.Navigation("applicant");
                 });
 
-            modelBuilder.Entity("HRMBackend.Model.SMS.SMSCampaignHistory", b =>
-                {
-                    b.HasOne("HRMBackend.Model.SMS.SMSTemplate", "smsTemplate")
-                        .WithMany("smsHistory")
-                        .HasForeignKey("smsTemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("smsTemplate");
-                });
-
-            modelBuilder.Entity("HRMBackend.Model.SMS.SMSCampaignReceipient", b =>
-                {
-                    b.HasOne("HRMBackend.Model.SMS.SMSCampaignHistory", "campaignHistory")
-                        .WithMany("smsReceipients")
-                        .HasForeignKey("campaignHistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("campaignHistory");
-                });
-
             modelBuilder.Entity("HRMBackend.Model.Applicant.Applicant", b =>
                 {
                     b.Navigation("otp")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HRMBackend.Model.SMS.SMSCampaignHistory", b =>
-                {
-                    b.Navigation("smsReceipients");
-                });
-
-            modelBuilder.Entity("HRMBackend.Model.SMS.SMSTemplate", b =>
-                {
-                    b.Navigation("smsHistory");
                 });
 #pragma warning restore 612, 618
         }

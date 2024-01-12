@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["HRMBackend/HRMBackend.csproj", "HRMBackend/"]
+COPY ["HRMBackend.csproj", "HRMBackend/"]
 RUN dotnet restore "HRMBackend/HRMBackend.csproj"
 COPY . .
 WORKDIR "/src/HRMBackend"

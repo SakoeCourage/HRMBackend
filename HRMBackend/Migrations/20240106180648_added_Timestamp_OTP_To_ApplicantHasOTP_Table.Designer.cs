@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRMBackend.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240104063839_initial")]
-    partial class initial
+    [Migration("20240106180648_added_Timestamp_OTP_To_ApplicantHasOTP_Table")]
+    partial class added_Timestamp_OTP_To_ApplicantHasOTP_Table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace HRMBackend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HRMBackend.DTO.Applicant.ApplicantDTO", b =>
+            modelBuilder.Entity("HRMBackend.Model.Applicant.Applicant", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace HRMBackend.Migrations
                     b.ToTable("Applicant");
                 });
 
-            modelBuilder.Entity("HRMBackend.DTO.Applicant.ApplicantHasToken", b =>
+            modelBuilder.Entity("HRMBackend.Model.Applicant.ApplicantHasOTP", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -74,32 +74,42 @@ namespace HRMBackend.Migrations
                     b.Property<int>("applicantID")
                         .HasColumnType("int");
 
-                    b.Property<string>("urlToken")
+                    b.Property<string>("contact")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("otp")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("updatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("id");
 
                     b.HasIndex("applicantID")
                         .IsUnique();
 
-                    b.ToTable("ApplicantHasToken");
+                    b.ToTable("ApplicantHasOTP");
                 });
 
-            modelBuilder.Entity("HRMBackend.DTO.Applicant.ApplicantHasToken", b =>
+            modelBuilder.Entity("HRMBackend.Model.Applicant.ApplicantHasOTP", b =>
                 {
-                    b.HasOne("HRMBackend.DTO.Applicant.ApplicantDTO", "applicant")
-                        .WithOne("applicantHasToken")
-                        .HasForeignKey("HRMBackend.DTO.Applicant.ApplicantHasToken", "applicantID")
+                    b.HasOne("HRMBackend.Model.Applicant.Applicant", "applicant")
+                        .WithOne("otp")
+                        .HasForeignKey("HRMBackend.Model.Applicant.ApplicantHasOTP", "applicantID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("applicant");
                 });
 
-            modelBuilder.Entity("HRMBackend.DTO.Applicant.ApplicantDTO", b =>
+            modelBuilder.Entity("HRMBackend.Model.Applicant.Applicant", b =>
                 {
-                    b.Navigation("applicantHasToken")
+                    b.Navigation("otp")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
