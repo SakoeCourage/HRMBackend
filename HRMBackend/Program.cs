@@ -4,7 +4,6 @@ using HRMBackend.Providers;
 using HRMBackend.Services.SMS_Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -30,7 +29,6 @@ builder.Services.AddAuthentication(x =>
     };
 });
 builder.Services.AddSingleton<JwtAuthProvider>(new JwtAuthProvider(key));
-
 //Adding DB Context
 builder.Services.AddDbContext<Context>(option =>
 {
@@ -69,10 +67,8 @@ builder.Services.AddHangfire(configuration => configuration
 // Add the processing server as IHostedService
 builder.Services.AddHangfireServer();
 
-
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-
 
 void SeedDatabase() { 
     using (var scope = app.Services.CreateScope())
@@ -94,7 +90,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHangfireDashboard();
 

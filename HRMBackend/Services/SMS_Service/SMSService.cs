@@ -9,8 +9,6 @@ using System.Net.Http;
 
 namespace HRMBackend.Services.SMS_Service
 {
-
-
     public class SMSService : ISMSService
     {
         private List<SMSCampaignReceipient> batchSMSList;
@@ -46,7 +44,7 @@ namespace HRMBackend.Services.SMS_Service
             await SendBatchSMSJob();
         }
 
-        //[AutomaticRetry(Attempts = 3)]
+        [AutomaticRetry(Attempts = 3)]
         public async Task SendBatchSMSJob()
         {
             _logger.LogInformation("Batch SMS Job Has Started...");
@@ -54,7 +52,6 @@ namespace HRMBackend.Services.SMS_Service
             foreach (var sms in batchSMSList)
             {
                 BackgroundJob.Enqueue(() => SendSMSAsync(apiKey, sms.contact,sms.message));
-                //await SendSMSAsync(apiKey, sms);
             }
             _logger.LogInformation("Batch SMS Job completed.");
         }
@@ -88,9 +85,7 @@ namespace HRMBackend.Services.SMS_Service
                 }
                 catch (Exception ex)
                 {
-
                     _logger.LogError($"An error occurred: {ex.Message}");
-
                 }
             }
         }
