@@ -9,7 +9,7 @@ namespace HRMBackend.Utilities
         internal static List<NewSMSContactDTO> ExtractDataFromExcel(ExcelPackage package)
         {
             List<NewSMSContactDTO> contacts = new List<NewSMSContactDTO>();
-
+            
             var worksheet = package.Workbook.Worksheets[0];
             var rowCount = worksheet.Dimension.Rows;
 

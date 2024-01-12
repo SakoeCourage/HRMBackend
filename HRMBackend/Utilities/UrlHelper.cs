@@ -4,8 +4,6 @@ namespace HRMBackend.Utilities
 {
     public class UrlHelper
     {
-
-       
         public static string GeneratePageUrl(string baseUrl, int? page, int? pageSize, string? searchKey)
         {
             var queryString = new Dictionary<string, string>();
@@ -19,11 +17,9 @@ namespace HRMBackend.Utilities
             return baseUrl + ToQueryString(queryString);
         }
 
-      
         public static string ToQueryString(Dictionary<string, string> dict)
         {
             var queryParts = dict.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}");
-            
             return "?" + string.Join("&", queryParts);
         }
 
@@ -36,11 +32,10 @@ namespace HRMBackend.Utilities
             {
                 query[kvp.Key] = kvp.Value;
             }
-
+            
             uriBuilder.Query = query.ToString();
             return uriBuilder.Uri.ToString();
         }
-
         public static string UpdateQueryStringParameter(string fullUrl, string paramName, string paramValue)
         {
             var uriBuilder = new UriBuilder(fullUrl);

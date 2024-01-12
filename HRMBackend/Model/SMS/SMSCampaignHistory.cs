@@ -16,7 +16,6 @@ namespace HRMBackend.Model.SMS
         [Required]
         public int receipients { get; set; }
         public virtual SMSTemplate smsTemplate { get; set; }
-       
         public virtual ICollection<SMSCampaignReceipient> smsReceipients { get; set; }
 
     }

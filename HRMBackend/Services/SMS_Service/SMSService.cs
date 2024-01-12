@@ -48,7 +48,6 @@ namespace HRMBackend.Services.SMS_Service
         public async Task SendBatchSMSJob()
         {
             _logger.LogInformation("Batch SMS Job Has Started...");
-
             foreach (var sms in batchSMSList)
             {
                 BackgroundJob.Enqueue(() => SendSMSAsync(apiKey, sms.contact,sms.message));
@@ -68,7 +67,6 @@ namespace HRMBackend.Services.SMS_Service
         {
             using (HttpClient client = new HttpClient())
             {   
-
                 var queryParams = $"api_key={apiKey}&to={contact}&from={appName}&sms={message}";
                 var url = $"https://sms.arkesel.com/sms/api?action=send-sms&{queryParams}";
                 try
@@ -95,7 +93,6 @@ namespace HRMBackend.Services.SMS_Service
         {
             BackgroundJob.Enqueue(() => this.SendSMSJoB(contact, message));
         }
-
 
       }
 }
